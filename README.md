@@ -15,7 +15,7 @@ Rather than training a detached mathematical model, this project wraps data prep
 ├── models/
 │   └── churn_xgboost_model.joblib      # Self-contained optimized model pipeline
 ├── src/
-│   └── customer_churn_pipeline.ipynb   # Complete verified development notebook
+│   └── customer_churn_XGBoost.ipynb   # Complete verified development notebook
 ├── requirements.txt                    # Explicit version pinned dependencies
 └── README.md                           # Professional portfolio documentation
 ```
