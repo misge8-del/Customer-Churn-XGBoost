@@ -23,7 +23,7 @@ Rather than training a detached mathematical model, this project wraps data prep
 ---
 
 ## 📊 Dataset & Feature Engineering Details
-The data footprint mirrors a 7,000-row schema with 21 core customer behavioral and demographic columns. 
+The data footprint mirrors a 7043-row schema with 22 core customer behavioral and demographic columns. 
 
 ### 🛠️ Advanced Data Wrangling & Feature Injections
 - **Type Coercion & Imputation:** Identified that the critical numerical property `TotalCharges` was contaminated with blank spaces (imported as strings) due to new accounts with `tenure == 0`. Leveraged `pd.to_numeric` forcing errors to `NaN`, followed by a fallback `median` imputation strategy inside the numerical pipeline wrapper.
