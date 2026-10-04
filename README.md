@@ -45,13 +45,6 @@ The project emphasizes **leakage-safe modeling, stratified validation, hyperpara
 
 ---
 
-## 👤 Author
-
-**Misgina Gebregergs**
-BSc Mathematics — Addis Ababa University
-
----
-
 ## 🎯 Project Overview
 
 Customer churn is a major business challenge in the telecommunications industry. Identifying customers who are likely to leave can help companies prioritize retention efforts and reduce potential revenue loss.
