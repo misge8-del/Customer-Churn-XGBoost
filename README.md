@@ -1,120 +1,143 @@
-## 📌 Table of Contents
+# 📉 Customer Churn Prediction — Telecom
 
-- [# 📉 Customer Churn Prediction in the Telecom Sector](#-customer-churn-prediction-in-the-telecom-sector)
-- [🎯 Project Overview](#-project-overview)
-- [💼 Business Problem](#-business-problem)
-- [🧠 Machine Learning Workflow](#-machine-learning-workflow)
-- [📊 Dataset](#-dataset)
-- [🛠️ Data Preparation](#️-data-preparation)
-- [🧪 Models](#-models)
-- [1. Environment and Libraries](#1-environment-and-libraries)
-- [2. Dataset Loading](#2-dataset-loading)
-- [3. Initial Data Exploration](#3-initial-data-exploration)
-- [4. Exploratory Data Analysis](#4-exploratory-data-analysis)
-- [5. Feature Relationship Analysis](#5-feature-relationship-analysis)
-- [6. Correlation Analysis](#6-correlation-analysis)
-- [7. Outlier Investigation](#7-outlier-investigation)
-- [8. Understanding the Data Description](#8-understanding-the-data-description)
-- [9. Missing Value Handling](#9-missing-value-handling)
-- [10. Feature Engineering](#10-feature-engineering)
-- [11. Model Benchmarking](#11-model-benchmarking)
-- [12. Cross-Validation](#12-cross-validation)
-- [13. Hyperparameter Tuning](#13-hyperparameter-tuning)
-- [14. Class Imbalance Handling](#14-class-imbalance-handling)
-- [15. Model Selection](#15-model-selection)
-- [16. Probability Calibration](#16-probability-calibration)
-- [17. Threshold Optimization](#17-threshold-optimization)
-- [18. Model Explainability](#18-model-explainability)
-- [19. Error Analysis](#19-error-analysis)
-- [20. Final Test Evaluation](#20-final-test-evaluation)
-- [21. Production Prediction](#21-production-prediction)
-- [22. Model Serialization](#22-model-serialization)
-- [📈 Results](#-results)
-- [💼 Business Interpretation](#-business-interpretation)
-- [⚠️ Limitations](#️-limitations)
-- [🔮 Future Improvements](#-future-improvements)
-- [📁 Project Structure](#-project-structure)
-- [▶️ How to Run](#️-how-to-run)
-- [👨‍💻 Author](#-author)
+An end-to-end machine learning project for predicting customer churn in the telecommunications sector. The project follows a leakage-safe workflow from data inspection and feature engineering through model benchmarking, cross-validation, hyperparameter tuning, probability calibration, threshold optimization, explainability, final evaluation, and production-style inference.
 
-   # 📉 Customer Churn Prediction in the Telecom Sector
-
-An end-to-end machine learning project for predicting customer churn in the telecommunications industry using **Logistic Regression, Random Forest, HistGradientBoosting, and XGBoost**.
-
-The project emphasizes **leakage-safe modeling, stratified validation, hyperparameter optimization, class-imbalance handling, probability calibration, threshold optimization, model explainability, and production-ready inference**.
+**Author:** Misgina Gebregergs
+**Project Type:** End-to-End Machine Learning Classification
+**Problem Type:** Binary Classification
+**Target:** `Churn` (`No` / `Yes`)
+**Primary Advanced Candidate:** XGBoost
+**Random State:** `42`
 
 ---
 
-## 🎯 Project Overview
+## Table of Contents
 
-Customer churn is a major business challenge in the telecommunications industry. Identifying customers who are likely to leave can help companies prioritize retention efforts and reduce potential revenue loss.
-
-This project develops a reproducible machine learning pipeline that predicts whether a customer is likely to churn based on customer demographics, services, account information, contract characteristics, and billing information.
-
-### Main objective
-
-> **Build a reliable and interpretable churn prediction system that can identify high-risk customers and support data-driven retention decisions.**
+* [Overview](#overview)
+* [Business Problem](#business-problem)
+* [Project Objectives](#project-objectives)
+* [Dataset](#dataset)
+* [Machine Learning Workflow](#machine-learning-workflow)
+* [Data Cleaning](#data-cleaning)
+* [Exploratory Data Analysis](#exploratory-data-analysis)
+* [Feature Engineering](#feature-engineering)
+* [Data Splitting](#data-splitting)
+* [Preprocessing Pipeline](#preprocessing-pipeline)
+* [Models](#models)
+* [Model Evaluation](#model-evaluation)
+* [Cross-Validation](#cross-validation)
+* [Hyperparameter Tuning](#hyperparameter-tuning)
+* [Class Imbalance](#class-imbalance)
+* [Model Selection and Calibration](#model-selection-and-calibration)
+* [Threshold Optimization](#threshold-optimization)
+* [Explainability](#explainability)
+* [Error Analysis](#error-analysis)
+* [Final Test Evaluation](#final-test-evaluation)
+* [Prediction Function](#prediction-function)
+* [Model Artifact](#model-artifact)
+* [Project Structure](#project-structure)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Technologies](#technologies)
+* [Limitations and Future Improvements](#limitations-and-future-improvements)
+* [Reproducibility](#reproducibility)
+* [Author](#author)
 
 ---
 
-## 🧠 Machine Learning Workflow
+## Overview
 
-The project follows a complete end-to-end machine learning workflow:
+Customer churn is an important business problem for telecommunications companies because losing customers can reduce revenue and increase customer-acquisition costs.
+
+This project develops a machine learning system that estimates the probability that a customer will churn. The predicted risk can then be used to prioritize customer-retention activities.
+
+The notebook implements a complete machine learning pipeline:
+
+> **Data Understanding → Cleaning → EDA → Feature Engineering → Preprocessing → Model Benchmarking → Cross-Validation → Hyperparameter Tuning → Imbalance Handling → Model Selection → Probability Calibration → Threshold Optimization → Explainability → Error Analysis → Final Test Evaluation → Production Prediction**
+
+The workflow is designed to reduce data leakage and keep the final test set untouched until the final evaluation.
+
+---
+
+## Business Problem
+
+The business goal is to identify customers who are at elevated risk of leaving the telecommunications service.
+
+A useful churn model can help a company:
+
+* Identify high-risk customers.
+* Prioritize retention campaigns.
+* Allocate customer-support resources.
+* Develop targeted offers.
+* Understand patterns associated with customer churn.
+* Balance false positives against missed churners.
+
+### Machine Learning Formulation
+
+This is a **binary classification** problem:
+
+| Class | Meaning  |
+| ----- | -------- |
+| `0`   | No Churn |
+| `1`   | Churn    |
+
+The target variable is:
 
 ```text
-Data Inspection
-      ↓
-Data Cleaning
-      ↓
-Exploratory Analysis
-      ↓
-Stratified Train / Validation / Test Split
-      ↓
-Feature Engineering
-      ↓
-Leakage-Safe Preprocessing
-      ↓
-Baseline Modeling
-      ↓
-Model Benchmarking
-      ↓
-Stratified Cross-Validation
-      ↓
-Hyperparameter Tuning
-      ↓
-Class-Imbalance Handling
-      ↓
-Model Selection
-      ↓
-Probability Calibration
-      ↓
-Threshold Optimization
-      ↓
-SHAP Explainability
-      ↓
-Error Analysis
-      ↓
-Final Test Evaluation
-      ↓
-Production Prediction
-      ↓
-Model Serialization
+Churn
 ```
 
-A key design principle is that the **final test set remains untouched until all modeling decisions are finalized**.
+with the mapping:
+
+```text
+No  → 0
+Yes → 1
+```
 
 ---
 
-## 📊 Dataset
+## Project Objectives
 
-The project uses a telecommunications customer dataset containing customer-level information related to:
+The project aims to:
 
-* Customer demographics
+1. Inspect and understand the real dataset.
+2. Identify data-quality issues.
+3. Remove non-predictive identifiers.
+4. Handle hidden missing values.
+5. Perform useful exploratory data analysis.
+6. Create domain-informed features.
+7. Build a leakage-safe preprocessing pipeline.
+8. Establish a Logistic Regression baseline.
+9. Compare multiple machine learning algorithms.
+10. Apply stratified cross-validation.
+11. Optimize model hyperparameters using PR-AUC.
+12. Handle class imbalance.
+13. Select the strongest candidate using validation evidence.
+14. Calibrate predicted probabilities.
+15. Optimize the classification threshold.
+16. Explain tree-based predictions with SHAP.
+17. Analyze false positives and false negatives.
+18. Evaluate the selected model on an untouched test set.
+19. Save the complete production model artifact.
+20. Provide a reusable prediction function.
+
+---
+
+## Dataset
+
+The project uses the **Telco Customer Churn** dataset.
+
+The notebook identifies:
+
+* **7,043 rows**
+* **21 columns**
+* `customerID` as a unique customer identifier
+* `Churn` as the target variable
+* Customer demographic information
 * Account information
-* Contract type
-* Internet services
-* Telephone services
-* Payment methods
+* Contract information
+* Internet and telephone services
+* Payment information
 * Monthly charges
 * Total charges
 * Customer tenure
@@ -122,358 +145,590 @@ The project uses a telecommunications customer dataset containing customer-level
 
 ### Target Variable
 
-**`Churn`**
+```text
+Churn
+```
 
-The target represents whether a customer has left the telecommunications service.
+The positive class is:
 
----
+```text
+Yes
+```
 
-## 🛠️ Data Preparation
+and the negative class is:
 
-The dataset is processed through a reproducible preprocessing workflow that includes:
+```text
+No
+```
 
-* Data-quality inspection
-* Missing-value handling
-* Duplicate detection
-* Identifier removal
-* Categorical-variable encoding
-* Numerical-variable preprocessing
-* Feature engineering
-* Leakage-safe transformations
+### Identifier
 
-Feature engineering is performed before model training while ensuring that information from the validation and test sets does not leak into the training process.
-
----
-
-## 🧪 Models
-
-Four classification approaches are evaluated:
-
-| Model                | Purpose                              |
-| -------------------- | ------------------------------------ |
-| Logistic Regression  | Baseline linear model                |
-| Random Forest        | Nonlinear ensemble baseline          |
-| HistGradientBoosting | Gradient boosting model              |
-| XGBoost              | Advanced gradient boosting candidate |
-
-**XGBoost** is integrated as the primary advanced model candidate, but the final model is selected objectively based on validation performance rather than assuming XGBoost must win.
+`customerID` is unique and is removed before model training because it is an identifier rather than a predictive feature.
 
 ---
 
-## 🔬 Model Validation
+## Machine Learning Workflow
 
-The dataset is divided using a **stratified train/validation/test strategy**.
+The project follows these major stages:
 
-The modeling process uses:
-
-* Stratified splitting
-* 5-fold Stratified Cross-Validation
-* Validation-based model comparison
-* Randomized hyperparameter search
-* Validation-only threshold optimization
-
-The final test set is reserved for one final evaluation after all model decisions have been frozen.
-
----
-
-## ⚙️ Hyperparameter Optimization
-
-Randomized hyperparameter search is applied to the tree-based models.
-
-For XGBoost, the search explores parameters including:
-
-* `n_estimators`
-* `max_depth`
-* `learning_rate`
-* `subsample`
-* `colsample_bytree`
-* `min_child_weight`
-* `gamma`
-* `reg_alpha`
-* `reg_lambda`
-
-The optimization objective uses **PR-AUC / Average Precision**, which is particularly useful when evaluating an imbalanced classification problem.
+```text
+1. Dataset Inspection
+2. Problem Formulation
+3. Data Cleaning
+4. Exploratory Data Analysis
+5. Train / Validation / Test Split
+6. Feature Engineering
+7. Preprocessing
+8. Baseline Modeling
+9. Model Benchmarking
+10. Stratified Cross-Validation
+11. Hyperparameter Optimization
+12. Class-Imbalance Handling
+13. Candidate Selection
+14. Probability Calibration
+15. Threshold Optimization
+16. Feature Ablation
+17. SHAP Explainability
+18. Error Analysis
+19. Final Test Evaluation
+20. Production Prediction
+21. Model Artifact Saving
+```
 
 ---
 
-## ⚖️ Class Imbalance
+## Data Cleaning
 
-Customer churn datasets commonly contain fewer churned customers than non-churned customers.
+The notebook performs professional data-quality handling before modeling.
 
-This project addresses the imbalance using model-appropriate techniques:
+### Missing Values
 
-* Logistic Regression → class weighting
-* Random Forest → class weighting
-* XGBoost → `scale_pos_weight`
-* HistGradientBoosting → evaluated without additional class weighting
-* Probability threshold optimization → controls the precision/recall trade-off
+Whitespace-only strings are converted to missing values:
 
-The XGBoost class-weighting ratio is calculated using the **training data only**.
+```python
+data[col] = data[col].replace(r"^\s*$", np.nan, regex=True)
+```
+
+`TotalCharges` is converted to numeric:
+
+```python
+data["TotalCharges"] = pd.to_numeric(
+    data["TotalCharges"],
+    errors="coerce"
+)
+```
+
+Zero-tenure customers are retained rather than being silently removed. Their resulting missing `TotalCharges` values are handled by the preprocessing pipeline.
+
+### Duplicate Checks
+
+The notebook checks:
+
+* Duplicate rows
+* Duplicate customer IDs
 
 ---
 
-## 📈 Evaluation Metrics
+## Exploratory Data Analysis
 
-Models are evaluated using multiple metrics rather than relying on accuracy alone.
+The project investigates customer and churn relationships using:
 
-### Classification Metrics
+* Churn distribution
+* Numerical feature distributions
+* Churn rates by contract type
+* Churn rates by internet service
+* Churn rates by payment method
+* Churn rates by online security
+* Churn rates by technical support
+* Churn rates by paperless billing
+* Churn rates across tenure bands
+
+The goal is to understand the data and identify useful patterns before modeling rather than generating visualizations without a modeling purpose.
+
+---
+
+## Feature Engineering
+
+Feature engineering is implemented as a custom scikit-learn transformer so that the same transformations are applied during both training and inference.
+
+The engineered features include:
+
+| Feature                         | Description                                                             |
+| ------------------------------- | ----------------------------------------------------------------------- |
+| `avg_monthly_charge_from_total` | Average monthly charge derived from total charges and tenure            |
+| `total_to_monthly_ratio`        | Ratio between total charges and monthly charges                         |
+| `tenure_months_squared`         | Squared tenure to capture nonlinear tenure effects                      |
+| `is_new_customer`               | Indicates customers with tenure of 1 month or less                      |
+| `service_count`                 | Number of subscribed services                                           |
+| `has_security_support`          | Indicates whether the customer has online security or technical support |
+
+The engineered features are also tested through an ablation experiment to determine whether they provide measurable value.
+
+---
+
+## Data Splitting
+
+The dataset is divided using a **stratified 70/15/15 split**:
+
+| Dataset    | Purpose                                                    |
+| ---------- | ---------------------------------------------------------- |
+| Training   | Model fitting, cross-validation, and hyperparameter tuning |
+| Validation | Model comparison, calibration, and threshold selection     |
+| Test       | Final one-time generalization evaluation                   |
+
+The final test set is not used for:
+
+* Hyperparameter tuning
+* Feature selection
+* Threshold selection
+* Model selection
+* Ensemble selection
+
+This helps provide a more reliable estimate of generalization performance.
+
+---
+
+## Preprocessing Pipeline
+
+The project uses scikit-learn pipelines to keep preprocessing consistent and leakage-safe.
+
+### Numerical Features
+
+The numerical pipeline uses:
+
+1. Median imputation
+2. Standard scaling
+
+```text
+Numerical Data
+     ↓
+Median Imputation
+     ↓
+StandardScaler
+```
+
+### Categorical Features
+
+The categorical pipeline uses:
+
+1. Most-frequent imputation
+2. One-hot encoding
+
+```text
+Categorical Data
+       ↓
+Most-Frequent Imputation
+       ↓
+One-Hot Encoding
+```
+
+The complete preprocessing process is integrated into the model pipeline.
+
+---
+
+## Models
+
+Four model families are benchmarked:
+
+### 1. Logistic Regression
+
+Used as an interpretable baseline.
+
+```text
+Logistic Regression
+```
+
+Class weighting is used to help account for the imbalanced target.
+
+### 2. Random Forest
+
+A nonlinear ensemble model based on multiple decision trees.
+
+```text
+Random Forest
+```
+
+### 3. HistGradientBoosting
+
+A gradient-boosting model designed to capture nonlinear relationships.
+
+```text
+HistGradientBoosting
+```
+
+### 4. XGBoost
+
+An advanced gradient-boosting algorithm and major candidate in the project.
+
+```text
+XGBoost
+```
+
+The notebook does **not** assume that XGBoost is automatically the best model. The final candidate is selected using validation evidence.
+
+---
+
+## Model Evaluation
+
+The project evaluates models using several complementary metrics.
+
+### Accuracy
+
+The proportion of all predictions that are correct.
+
+### Precision
+
+Among customers predicted as churners, precision measures how many actually churn.
+
+### Recall
+
+Among actual churners, recall measures how many the model successfully identifies.
+
+### F1 Score
+
+The harmonic mean of precision and recall.
+
+### ROC-AUC
+
+Measures ranking performance across different classification thresholds.
+
+### PR-AUC
+
+Measures precision-recall performance and is especially useful when the positive class is the minority class.
+
+### Brier Score
+
+Measures the quality of predicted probabilities. Lower values indicate better probability calibration.
+
+### Confusion Matrix
+
+The final evaluation also reports:
+
+* True Positives
+* True Negatives
+* False Positives
+* False Negatives
+
+---
+
+## Cross-Validation
+
+The project uses **5-fold Stratified K-Fold Cross-Validation**.
+
+```python
+StratifiedKFold(
+    n_splits=5,
+    shuffle=True,
+    random_state=42
+)
+```
+
+The following metrics are tracked:
+
+* ROC-AUC mean and standard deviation
+* PR-AUC mean and standard deviation
+* F1 mean and standard deviation
+
+PR-AUC is used as an important selection criterion because churn is the minority class.
+
+---
+
+## Hyperparameter Tuning
+
+Hyperparameter optimization is performed using:
+
+```python
+RandomizedSearchCV
+```
+
+The optimization objective is:
+
+```text
+average_precision
+```
+
+which corresponds to PR-AUC.
+
+The following models are tuned independently:
+
+* Random Forest
+* HistGradientBoosting
+* XGBoost
+
+The searches are performed using the training data and stratified cross-validation rather than the final test set.
+
+---
+
+## Class Imbalance
+
+Because churn is the minority class, the project does not rely on accuracy alone.
+
+### Logistic Regression
+
+Uses:
+
+```python
+class_weight="balanced"
+```
+
+### Random Forest
+
+Uses:
+
+```python
+class_weight="balanced"
+```
+
+### XGBoost
+
+Uses a training-data-derived:
+
+```python
+scale_pos_weight
+```
+
+### Threshold Optimization
+
+The decision threshold is also optimized using validation data, providing another way to control the precision-recall trade-off.
+
+---
+
+## Model Selection and Calibration
+
+After hyperparameter tuning, the tuned candidates are compared on validation data:
+
+* Tuned Random Forest
+* Tuned HistGradientBoosting
+* Tuned XGBoost
+
+The candidate with the highest validation **PR-AUC** is selected.
+
+The selected candidate is then calibrated using:
+
+```python
+CalibratedClassifierCV
+```
+
+with sigmoid calibration.
+
+Calibration quality is assessed using:
+
+* Brier score
+* Calibration curve
+
+This separates two important questions:
+
+1. How well does the model rank customers by risk?
+2. How trustworthy are the predicted probabilities?
+
+---
+
+## Threshold Optimization
+
+The project does not automatically assume that:
+
+```text
+threshold = 0.50
+```
+
+is optimal.
+
+Instead, validation thresholds from **0.05 to 0.95** are evaluated.
+
+The current notebook selects the threshold that maximizes validation:
+
+```text
+F1 Score
+```
+
+The selected threshold is then frozen before the final test evaluation.
+
+### Business Extension
+
+If reliable business costs become available, the threshold can instead be optimized using expected cost:
+
+```text
+Expected Cost =
+(False Positives × FP Cost)
++
+(False Negatives × FN Cost)
+```
+
+This would allow the model's operating point to reflect the actual cost of retention actions and missed churners.
+
+---
+
+## Explainability
+
+The notebook includes an optional SHAP explainability stage.
+
+SHAP can be used to understand:
+
+* Which features influence predictions most strongly.
+* Which features increase predicted churn risk.
+* Which features decrease predicted churn risk.
+* Individual customer prediction explanations.
+
+The notebook attempts to generate a SHAP summary plot for the selected tree-based candidate.
+
+> **Important:** SHAP describes the model's association with a prediction. It does not prove that a feature causes customer churn.
+
+---
+
+## Error Analysis
+
+The validation predictions are categorized into:
+
+* Correct predictions
+* False positives
+* False negatives
+
+The notebook also examines false positives and false negatives by contract group.
+
+This helps answer:
+
+> **Where does the model make mistakes, and what types of customers are difficult to classify?**
+
+False negatives are especially important because they represent churners that the model failed to identify.
+
+---
+
+## Final Test Evaluation
+
+The final test set is evaluated **once**, after model selection, calibration, and threshold selection.
+
+The final evaluation reports:
 
 * Accuracy
 * Precision
 * Recall
-* F1-score
+* F1
 * ROC-AUC
 * PR-AUC
-* Confusion Matrix
-* Classification Report
+* Brier score
+* Classification report
+* Confusion matrix
+* ROC curve
+* Precision-recall curve
 
-### Probability Quality
+The notebook explicitly avoids further tuning after the final test result is viewed.
 
-* Brier Score
-* Calibration Curve
-
-### Why PR-AUC?
-
-Because churn prediction can involve class imbalance, **PR-AUC provides useful information about the model's ability to identify churn customers while controlling false positives**.
+This protects the test set from becoming part of the model-development process.
 
 ---
 
-## 🏆 Model Selection
+## Prediction Function
 
-The tuned candidate models are compared using the validation set.
+The notebook provides a reusable production-style function:
 
-The current selection strategy is:
-
-```text
-Random Forest
-        │
-HistGradientBoosting
-        │
-XGBoost
-        ↓
-Compare Validation PR-AUC
-        ↓
-Select Best Candidate
+```python
+predict_customer(customer_data)
 ```
 
-The model with the strongest **validation PR-AUC** becomes the candidate for probability calibration and subsequent threshold optimization.
+It accepts either:
 
-The final model is therefore determined by the experimental results rather than by model popularity.
+* A Python dictionary
+* A pandas DataFrame
 
----
+and returns:
 
-## 🎚️ Probability Calibration
+| Output               | Description                    |
+| -------------------- | ------------------------------ |
+| `churn_probability`  | Predicted probability of churn |
+| `prediction`         | Binary churn prediction        |
+| `risk_level`         | Low, Medium, or High           |
+| `recommended_action` | Suggested retention action     |
 
-The selected model undergoes probability calibration using a separate calibration subset from the training data.
+### Risk Levels
 
-Calibration performance is evaluated using:
-
-* Brier Score
-* Calibration Curve
-
-This is important because the model is expected to produce not only a classification but also a meaningful **churn probability**.
-
----
-
-## 🎯 Threshold Optimization
-
-The default classification threshold of `0.50` is not automatically assumed to be optimal.
-
-The project investigates alternative probability thresholds using the **validation set**.
-
-This allows the business to choose a threshold depending on the desired balance between:
-
-* Precision
-* Recall
-* False positives
-* False negatives
-
-For example, a company may prefer higher recall if missing a high-risk customer is more costly than contacting a customer who ultimately does not churn.
-
----
-
-## 🔍 Model Explainability
-
-The project includes **SHAP-based model explainability** to investigate which features contribute most strongly to predictions.
-
-Explainability helps answer questions such as:
-
-* Which customer characteristics increase churn risk?
-* Which features are associated with lower churn risk?
-* Why was a particular customer classified as high risk?
-
-This makes the model more useful for analysis and business decision-making.
-
----
-
-## 🚨 Error Analysis
-
-Validation predictions are analyzed to identify:
-
-* False positives
-* False negatives
-* Difficult customer cases
-* Potential weaknesses in the model
-
-This helps determine where the model performs well and where additional data or future modeling improvements may be needed.
-
----
-
-## 🧪 Final Test Evaluation
-
-After all modeling decisions are finalized, the selected model is evaluated on the **untouched test set**.
-
-The final report includes:
+The current implementation uses:
 
 ```text
-Model: Tuned XGBoost
-Threshold: 0.315
-
-Accuracy:   77.29%
-Precision:  55.68%
-Recall:     71.53%
-F1:         62.62%
-ROC-AUC:    83.96%
-PR-AUC:     66.26%
-Brier:      0.1389
+Probability >= 0.70 → High
+Probability >= 0.40 → Medium
+Otherwise            → Low
 ```
 
-> **Note:** These values will be added after the complete notebook has been executed. No test-set results are assumed or fabricated.
-
----
-
-## 💼 Business Interpretation
-
-The purpose of the model is not simply to maximize a machine learning metric.
-
-The practical goal is to help answer:
-
-> **Which customers are at higher risk of churn, and which customers should receive retention attention first?**
-
-A production system could use the predicted churn probability to categorize customers into different risk levels and prioritize retention strategies.
-
-Example:
+The recommended actions are:
 
 ```text
-Churn Probability
-       ↓
-Risk Level
-       ↓
-Retention Priority
-       ↓
-Recommended Business Action
+High   → Prioritize retention outreach
+Medium → Monitor and consider targeted retention
+Low    → Standard customer engagement
 ```
 
 ---
 
-## 🚀 Production Prediction
+## Model Artifact
 
-The notebook includes a reusable prediction workflow that accepts new customer information and produces:
-
-```text
-Churn Probability
-Prediction
-Risk Level
-Recommended Action
-```
-
-The same preprocessing used during model development is preserved for inference to ensure consistency between training and prediction.
-
----
-
-## 💾 Model Serialization
-
-The final project saves a production-oriented model artifact using **Joblib**.
-
-The saved artifacts include:
+The notebook saves the complete model artifact using Joblib:
 
 ```text
-artifacts/
-├── customer_churn_model.joblib
-└── model_metadata.json
+artifacts/customer_churn_model.joblib
 ```
 
-The metadata records information such as:
+It also saves metadata:
 
-* Selected model
-* Selected threshold
+```text
+artifacts/model_metadata.json
+```
+
+The artifact contains:
+
+* Calibrated model
+* Selected classification threshold
+* Target mapping
+* Selected model name
 * Random state
-* Final test metrics
-* Training-set size
-* Validation-set size
-* Test-set size
-* Positive and negative class labels
+
+Saving the complete pipeline rather than only the classifier helps preserve the preprocessing and inference workflow required by the model.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
-A recommended GitHub structure is:
+A typical project structure is:
 
 ```text
-customer-churn-prediction/
+Customer-Churn-Prediction/
 │
+├── Customer_Churn_Prediction.ipynb
+├── Telco-Customer-Churn.csv
 ├── README.md
 │
-├── notebooks/
-│   └── customer_churn_prediction_XGBoost.ipynb
+├── artifacts/
+│   ├── customer_churn_model.joblib
+│   └── model_metadata.json
 │
-├── data/
-│   └── README.md
-│
-├── models/
-│   └── customer_churn_model.joblib
-│
-├── reports/
-│   └── model_results.md
-│
-├── figures/
-│   ├── model_comparison.png
-│   ├── confusion_matrix.png
-│   ├── calibration_curve.png
-│   └── shap_summary.png
-│
-├── requirements.txt
-│
-└── .gitignore
+└── figures/
+    ├── target_distribution.png
+    ├── numeric_distributions.png
+    ├── churn_by_tenure.png
+    ├── calibration_curve.png
+    ├── threshold_analysis.png
+    ├── shap_summary.png
+    ├── final_roc_curve.png
+    └── final_pr_curve.png
 ```
 
-> The actual repository structure may be simplified depending on which artifacts are ultimately committed.
-
 ---
 
-## 💻 Technologies
-
-**Python**
-**Pandas**
-**NumPy**
-**Matplotlib**
-**Seaborn**
-**Scikit-learn**
-**XGBoost**
-**SHAP**
-**Joblib**
-**Jupyter Notebook**
-**Google Colab**
-
----
-
-## ▶️ How to Run
+## Installation
 
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR-GITHUB-REPOSITORY-URL>
-cd customer-churn-prediction
+git clone <your-repository-url>
+cd Customer-Churn-Prediction
 ```
 
 ### 2. Install dependencies
 
 ```bash
-pip install -r requirements.txt
+pip install numpy pandas matplotlib scikit-learn xgboost shap joblib jupyter
 ```
 
-### 3. Open the notebook
+### 3. Launch Jupyter Notebook
 
 ```bash
 jupyter notebook
@@ -482,89 +737,208 @@ jupyter notebook
 Then open:
 
 ```text
-notebooks/customer_churn_prediction_XGBoost.ipynb
+Customer_Churn_Prediction.ipynb
 ```
 
-Alternatively, the notebook can be executed directly in **Google Colab**.
+### Google Colab
 
-### 4. Provide the dataset
+The notebook can also be executed in Google Colab after uploading the dataset and updating:
 
-Place the dataset in the expected project location and update `DATA_PATH` if necessary.
+```python
+DATA_PATH
+```
 
----
-
-## ⚠️ Limitations
-
-This project has several limitations:
-
-* Model performance depends on the quality and representativeness of the available dataset.
-* Historical customer behavior may not perfectly represent future behavior.
-* Churn predictions indicate risk rather than certainty.
-* Threshold selection depends on the business cost of false positives and false negatives.
-* Model explanations describe associations learned by the model and should not automatically be interpreted as causal relationships.
+to the location of the CSV file.
 
 ---
 
-## 🔮 Future Improvements
+## Usage
 
-Potential future improvements include:
+### Train the model
 
-* Larger and more recent customer datasets
-* External behavioral and usage data
-* Advanced hyperparameter optimization with Optuna
-* LightGBM and CatBoost comparison
-* Ensemble modeling if experiments justify it
-* Cost-sensitive threshold optimization
-* Drift monitoring
-* Automated model retraining
-* Deployment through an API
-* Interactive churn-risk dashboard
-* Real-time prediction pipeline
+Run the notebook from top to bottom.
+
+The notebook will:
+
+1. Load the dataset.
+2. Inspect and clean the data.
+3. Perform EDA.
+4. Engineer features.
+5. Split the data.
+6. Build preprocessing pipelines.
+7. Benchmark models.
+8. Run cross-validation.
+9. Tune Random Forest, HistGradientBoosting, and XGBoost.
+10. Select the best candidate using validation PR-AUC.
+11. Calibrate probabilities.
+12. Optimize the classification threshold.
+13. Perform SHAP analysis.
+14. Analyze prediction errors.
+15. Evaluate the final model on the untouched test set.
+16. Save the model artifact and metadata.
+
+### Example Prediction
+
+```python
+example_customer = X_val.iloc[[0]].copy()
+
+prediction = predict_customer(example_customer)
+
+display(prediction)
+```
 
 ---
 
-## 📌 Key Machine Learning Skills Demonstrated
+## Technologies
 
-This project demonstrates practical experience with:
+### Programming Language
 
-* Data cleaning
-* Exploratory data analysis
-* Feature engineering
-* Leakage prevention
-* Classification
-* Ensemble learning
-* Gradient boosting
+* Python
+
+### Data Analysis
+
+* Pandas
+* NumPy
+
+### Visualization
+
+* Matplotlib
+
+### Machine Learning
+
+* Scikit-learn
 * XGBoost
-* Cross-validation
-* Hyperparameter tuning
-* Imbalanced classification
-* Probability calibration
-* Threshold optimization
-* Model explainability
-* Error analysis
-* Model serialization
-* Production-oriented inference
-* Reproducible machine learning workflows
+
+### Explainability
+
+* SHAP
+
+### Model Persistence
+
+* Joblib
+
+### Development Environment
+
+* Jupyter Notebook
+* Google Colab
 
 ---
 
-## 👨‍💻 Author
+## Limitations and Future Improvements
+
+Although the project implements a comprehensive machine learning workflow, several improvements could be considered.
+
+### 1. Business Cost Optimization
+
+The current threshold objective is maximum validation F1.
+
+A production system should ideally use real business costs for:
+
+* False positives
+* False negatives
+* Retention campaigns
+
+### 2. External Validation
+
+Testing the model on another telecommunications dataset or future customer cohort would provide stronger evidence of generalization.
+
+### 3. Model Monitoring
+
+A production deployment should monitor:
+
+* Prediction drift
+* Feature drift
+* Churn-rate changes
+* Calibration
+* Performance degradation
+
+### 4. Fairness Analysis
+
+If sensitive demographic information is used operationally, model performance should be evaluated across relevant customer groups.
+
+### 5. Deployment
+
+The saved Joblib artifact could be integrated into:
+
+* FastAPI
+* Flask
+* Streamlit
+* A cloud inference service
+
+### 6. Further Model Experiments
+
+Future experiments could investigate:
+
+* LightGBM
+* CatBoost
+* Ensemble methods
+* Cost-sensitive learning
+* Advanced calibration methods
+* More sophisticated threshold strategies
+
+Any additional experiment should be evaluated using a leakage-safe methodology.
+
+---
+
+## Reproducibility
+
+The project uses:
+
+```python
+RANDOM_STATE = 42
+```
+
+for reproducibility across:
+
+* Train/validation/test splitting
+* Cross-validation
+* Randomized hyperparameter search
+* Random forest
+* XGBoost
+* Feature sampling
+
+The final artifact also stores the random state and selected threshold in metadata.
+
+---
+
+## Important Modeling Practices
+
+This project follows several important machine learning practices:
+
+* Do not use the final test set for tuning.
+* Fit preprocessing only within the training workflow.
+* Use stratification for an imbalanced classification target.
+* Compare multiple models rather than assuming one algorithm is best.
+* Use PR-AUC in addition to accuracy.
+* Calibrate probabilities when probability quality matters.
+* Optimize the classification threshold using validation data.
+* Perform feature ablation before assuming engineered features help.
+* Use explainability tools to understand model behavior.
+* Save preprocessing together with the trained model.
+* Do not retune the model after viewing final test performance.
+
+---
+
+## Author
 
 **Misgina Gebregergs**
 
-BSc Mathematics
+Bachelor's student in Mathematics Science
 Addis Ababa University
 
 Interested in:
 
-**Machine Learning • Data Science • Artificial Intelligence • Mathematical Modeling**
+* Machine Learning
+* Data Science
+* Artificial Intelligence
+* Mathematical Modeling
+* Optimization
+* Python
 
 ---
 
-## ⭐ Project Status
+## Project Status
 
-**Status:** 🟡 In Development
+**Status:** Completed end-to-end ML project
 
-The complete modeling pipeline has been implemented. Final performance metrics will be reported after the notebook is executed and the final test evaluation is completed.
-
-**Important:** The final test set is kept untouched until all model-selection and threshold decisions are finalized.
+The notebook contains the full workflow from raw customer data through model development, evaluation, explainability, and model artifact generation.
