@@ -1,5 +1,6 @@
 ## 📌 Table of Contents
 
+- [# 📉 Customer Churn Prediction in the Telecom Sector](#-customer-churn-prediction-in-the-telecom-sector)
 - [🎯 Project Overview](#-project-overview)
 - [💼 Business Problem](#-business-problem)
 - [🧠 Machine Learning Task](#-machine-learning-task)
