@@ -326,16 +326,18 @@ After all modeling decisions are finalized, the selected model is evaluated on t
 
 The final report includes:
 
+```text
 Model: Tuned XGBoost
 Threshold: 0.315
 
-Accuracy:  77.29%
-Precision: 55.68%
-Recall:    71.53%
-F1:        62.62%
-ROC-AUC:   83.96%
-PR-AUC:    66.26%
-Brier:     0.1389
+Accuracy:   77.29%
+Precision:  55.68%
+Recall:     71.53%
+F1:         62.62%
+ROC-AUC:    83.96%
+PR-AUC:     66.26%
+Brier:      0.1389
+```
 
 > **Note:** These values will be added after the complete notebook has been executed. No test-set results are assumed or fabricated.
 
