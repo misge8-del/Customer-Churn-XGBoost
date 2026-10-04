@@ -1,0 +1,19 @@
+{
+  "model_name": "Tuned XGBoost",
+  "selected_threshold": 0.31499999999999995,
+  "random_state": 42,
+  "final_test_metrics": {
+    "Accuracy": 0.7729422894985809,
+    "Precision": 0.556786703601108,
+    "Recall": 0.7153024911032029,
+    "F1": 0.6261682242990654,
+    "ROC_AUC": 0.83963981729464,
+    "PR_AUC": 0.6626309125498263,
+    "Brier": 0.1388883061534068
+  },
+  "train_rows": 4930,
+  "validation_rows": 1056,
+  "test_rows": 1057,
+  "positive_class": "Yes",
+  "negative_class": "No"
+}
