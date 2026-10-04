@@ -1,4 +1,4 @@
-# 📉 Customer Churn Prediction — Telecom
+# 📉 Customer Churn Prediction — Telecom-Center
 
 An end-to-end machine learning project for predicting customer churn in the telecommunications sector. The project follows a leakage-safe workflow from data inspection and feature engineering through model benchmarking, cross-validation, hyperparameter tuning, probability calibration, threshold optimization, explainability, final evaluation, and production-style inference.
 
